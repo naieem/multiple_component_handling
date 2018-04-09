@@ -1,15 +1,17 @@
 <div class="card">
-    <h2>{{data.title}}</h2>
+    <!-- <h2>{{data.title}}</h2> -->
     <div class="card-body">
-        <form class="col-md-12 w-100">
+        <!-- <form class="col-md-12 w-100"> -->
+            {{food}}
+            <p>{{comment}}</p>
             <mat-form-field class="w-100">
-                <input matInput placeholder="Favorite food" value="Sushi">
+                <input matInput placeholder="Favorite food" [(ngModel)]="food" name="food" >
             </mat-form-field>
 
             <mat-form-field class="w-100">
-                <textarea matInput placeholder="Leave a comment"></textarea>
+                <textarea matInput placeholder="Leave a comment" [(ngModel)]="comment" name="comment" ></textarea>
             </mat-form-field>
-        </form>
-        <button type="button" class="btn col-md-12 btn-primary">Upload</button>
+        <!-- </form> -->
+        <!-- <button type="button" class="btn col-md-12 btn-primary">Upload</button> -->
     </div>
 </div>

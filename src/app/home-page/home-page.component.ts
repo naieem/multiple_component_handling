@@ -11,15 +11,14 @@ import { ISuperCop } from './ISuperCop';
 export class HomePageComponent implements OnInit {
   componentRef: any;
   componentLists: any;
-  @ViewChild(SuptoCopDirective) superCop: SuptoCopDirective;
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
     this.componentLists = [
       {
-        componentName: 'FormInputComponent',
+        componentName: FormInputComponent,
         model: 'Name'
       },
       {
-        componentName: 'FormCheckboxComponent',
+        componentName: FormCheckboxComponent,
         model: 'Hello'
       }
     ];
@@ -30,7 +29,6 @@ export class HomePageComponent implements OnInit {
   }
   loadComponent() {
     this.componentLists.forEach(element => {
-      console.log(element);
       // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(element.componentName);
       // const viewContainerRef = this.superCop.viewContainerRef;
       // viewContainerRef.clear();
@@ -40,7 +38,15 @@ export class HomePageComponent implements OnInit {
       // };
     });
   }
-  getDynamicLoader() {
-    console.log(this.componentRef.instance);
-  }
+}
+
+export class Hero {
+
+  constructor(
+    public id: number,
+    public name: string,
+    public power: string,
+    public alterEgo?: string
+  ) {  }
+
 }
