@@ -4,6 +4,10 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 import { HomePageComponent} from '../home-page/home-page.component';
 const appRoutes: Routes = [
   { path: '', component: HomePageComponent },
+  {
+    path: 'todo',
+    loadChildren: 'app/todo/todo.module#TodoModule'
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
