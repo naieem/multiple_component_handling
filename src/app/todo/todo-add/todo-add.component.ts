@@ -4,7 +4,7 @@ import { NgRedux, select } from '@angular-redux/store';
 import { IAppState } from '../../store';
 import { ITodo } from '../../todos';
 import { ADD_TODO, NEXT_STEP, PREVIOUS_STEP } from '../../actions';
-
+import { TodoServiceService } from '../todo-service.service';
 @Component({
   selector: 'app-todo-add',
   templateUrl: './todo-add.component.html',
@@ -13,7 +13,7 @@ import { ADD_TODO, NEXT_STEP, PREVIOUS_STEP } from '../../actions';
 export class TodoAddComponent implements OnInit {
   todoModel: ITodo;
   @select() stepNumber;
-  constructor(private ngRedux: NgRedux<IAppState>, private router: Router) {}
+  constructor(private ngRedux: NgRedux<IAppState>, private router: Router, private service: TodoServiceService) {}
 
   ngOnInit() {
     this.todoModel = {
@@ -33,7 +33,18 @@ export class TodoAddComponent implements OnInit {
       type: ADD_TODO,
       todo: todoModel
     });
-    this.router.navigate(['/todo/list']);
+    this.service.saveWorkflowConfig(todoModel)
+    .subscribe((result: any) => {
+        if ( result.status) {
+           this.router.navigate(['/todo/list']);
+        } else {
+          console.log(result.data);
+        }
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   nextInformation() {

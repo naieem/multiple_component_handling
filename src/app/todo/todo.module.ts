@@ -6,7 +6,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoAddComponent } from './todo-add/todo-add.component';
 import { TodoUpdateComponent } from './todo-update/todo-update.component';
 import { TodoContainerComponent } from './todo-container/todo-container.component';
-
+import { TodoServiceService } from './todo-service.service';
 const todoRoutes: Routes = [
   {
     path: '',
@@ -55,7 +55,8 @@ const todoRoutes: Routes = [
     TodoAddComponent,
     TodoUpdateComponent,
     TodoContainerComponent
-  ]
+  ],
+  providers: [TodoServiceService]
 })
 export class TodoModule { }
 

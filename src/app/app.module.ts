@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 // ======================================
 // Redux related coding starts
 // ======================================
@@ -34,6 +35,7 @@ import { TodoModule } from './todo/todo.module';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     PlatformComponentsModule,
