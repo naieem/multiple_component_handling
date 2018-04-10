@@ -4,8 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 // ======================================
 // Redux related coding starts
 // ======================================
-import { NgRedux, NgReduxModule } from '@angular-redux/store';
-import { IAppState, rootReducer, INITIAL_STATE } from './store';
+
+// import { NgRedux, NgReduxModule } from '@angular-redux/store';
+// import { IAppState, rootReducer, INITIAL_STATE } from './store';
 
 // ======================================
 // Redux related coding ends
@@ -15,8 +16,6 @@ import { AppRoutingModule, MainRouteComponets } from './app-routing-module/app.r
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { EntryComponents } from './entryComponents';
-
-import { WorkflowService } from './workflow.service';
 
 // ----------- all platform componets are loaded via this ------------//
 import { PlatformComponentsModule, PlatformComponents } from './platform-components/platform-components.module';
@@ -39,15 +38,11 @@ import { TodoModule } from './todo/todo.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     PlatformComponentsModule,
-    NgReduxModule,
     TodoModule
   ],
-  providers: [WorkflowService],
+  providers: [],
   bootstrap: [AppComponent],
   entryComponents: EntryComponents,
 })
 export class AppModule {
-    constructor (ngRedux: NgRedux<IAppState>) {
-        ngRedux.configureStore(rootReducer, INITIAL_STATE);
-    }
  }

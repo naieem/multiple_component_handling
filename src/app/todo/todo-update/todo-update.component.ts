@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgRedux, select } from '@angular-redux/store';
-import { IAppState } from '../../store';
+import { IAppState, rootReducer } from '../../store';
 import { ITodo } from '../../todos';
 import { UPDATE_TODO } from '../../actions';
 import * as _ from 'lodash';
@@ -16,6 +16,7 @@ export class TodoUpdateComponent implements OnInit {
   todos: ITodo[];
   itemId: Number;
   wfModel: any;
+  @select() information;
   constructor( private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>,
     private router: Router, private service: TodoServiceService) { }
 
@@ -32,7 +33,14 @@ export class TodoUpdateComponent implements OnInit {
     .subscribe((result: any) => {
         if ( result.status) {
           this.wfModel = result.data;
-          console.log(result.data);
+          const data = {
+            todos: [],
+            lastUpdate: new Date(),
+            stepNumber: 1,
+            information: this.wfModel
+          };
+          this.ngRedux.configureStore(rootReducer, data);
+          console.log(this.ngRedux.getState());
         } else {
           console.log(result.data);
         }

@@ -29,3 +29,22 @@
     </div>
     <button type="submit" class="btn btn-primary" (click)="updateInformation(todoModel)">Update</button>
 </form>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of information | async">
+            <th scope="row">{{item._id}}</th>
+            <td>{{item.name}}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

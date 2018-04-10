@@ -8,12 +8,13 @@ export interface IAppState {
     todos: ITodo[];
     lastUpdate: Date;
     stepNumber: number;
+    information: any;
 }
 
 // ======================================
 // Setting initial state Data
 // ======================================
-export const INITIAL_STATE: IAppState = {
+export const INITIAL_STATE: any = {
     todos: [
         {
             id: 1,

@@ -12,7 +12,7 @@ export class TodoListComponent implements OnInit {
   @select() todos;
   @select() lastUpdate;
   todo: any;
-  constructor( private router: Router, private service: TodoServiceService) { }
+  constructor( private ngRedux: NgRedux<IAppState>, private router: Router, private service: TodoServiceService) { }
 
   ngOnInit() {
     this.service.getAllWorkflowConfig()
