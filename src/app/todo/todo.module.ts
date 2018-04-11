@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { EntryComponents } from '../entryComponents';
+import { PlatformComponents } from '../platform-components/platform-components.module';
 // ======================================
 // Redux related coding starts
 // ======================================
@@ -74,7 +74,7 @@ const todoRoutes: Routes = [
     TodoContainerComponent
   ],
   providers: [TodoServiceService, WorkflowService],
-  entryComponents: EntryComponents
+  entryComponents: PlatformComponents
 })
 export class TodoModule {
   // constructor (ngRedux: NgRedux<IAppState>) {

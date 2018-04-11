@@ -11,8 +11,9 @@ export class ComponentLoaderComponent implements OnInit {
   constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.component);
-    this.viewContainerRef.createComponent(componentFactory);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.component.component);
+    const newComponent = this.viewContainerRef.createComponent(componentFactory);
+    (<any>newComponent.instance).data = this.component;
   }
 
 }

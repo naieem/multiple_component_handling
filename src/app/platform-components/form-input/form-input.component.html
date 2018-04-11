@@ -1,10 +1,10 @@
 <div class="card">
-    <!-- <h2>{{data.title}}</h2> -->
+    <h2>{{data.LabelTitle}}</h2>
     <div class="card-body">
         <!-- <form class="col-md-12 w-100"> -->
-        {{food}}
+        {{input}}
         <mat-form-field class="w-100">
-            <input matInput placeholder="Favorite food" [(ngModel)]="food" name="food" (change)="OnInputChange(food)">
+            <input matInput  [(ngModel)]="input" placeholder="{{data.placeholder}}" name="input" (keyup)="OnInputChange(input)">
         </mat-form-field>
         <!-- </form> -->
         <!-- <button type="button" class="btn col-md-12 btn-primary">Upload</button> -->

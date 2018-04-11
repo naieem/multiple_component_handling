@@ -1,11 +1,11 @@
 <div class="card">
-    <!-- <h2>{{data.title}}</h2> -->
+    <h2>{{data.LabelTitle}}</h2>
     <div class="card-body">
         <!-- <form class="col-md-12 w-100"> -->
-        <p>{{comment}}</p>
+        <p>{{textarea}}</p>
 
         <mat-form-field class="w-100">
-            <textarea matInput placeholder="Leave a comment" [(ngModel)]="comment" name="comment"></textarea>
+            <textarea matInput  [(ngModel)]="textarea" placeholder="{{data.placeholder}}" name="textarea" (keyup)="onChange(textarea)"></textarea>
         </mat-form-field>
         <!-- </form> -->
         <!-- <button type="button" class="btn col-md-12 btn-primary">Upload</button> -->

@@ -10,9 +10,9 @@ export class FormCheckboxComponent implements OnInit {
   constructor(private workflowService: WorkflowService) { }
 
   ngOnInit() {
-    this.workflowService.getData().subscribe(result => {
-      console.log(result);
-    });
+    // this.workflowService.getData().subscribe(result => {
+    //   console.log(result);
+    // });
   }
 
 }
