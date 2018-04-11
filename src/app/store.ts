@@ -9,6 +9,7 @@ export interface IAppState {
     lastUpdate: Date;
     stepNumber: number;
     information: any;
+    newWorkflowInformation: any;
 }
 
 // ======================================

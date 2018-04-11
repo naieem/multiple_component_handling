@@ -21,15 +21,14 @@ import { EntryComponents } from './entryComponents';
 import { PlatformComponentsModule, PlatformComponents } from './platform-components/platform-components.module';
 import { AppComponent } from './app.component';
 import { SuptoCopDirective } from './home-page/supto-cop.directive';
-import { FormInputComponent } from './platform-components/form-input/form-input.component';
-import { ComponentLoaderComponent } from './component-loader/component-loader.component';
+// import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { TodoModule } from './todo/todo.module';
 @NgModule({
   declarations: [
     AppComponent,
     MainRouteComponets,
     SuptoCopDirective,
-    ComponentLoaderComponent
+    // ComponentLoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +41,7 @@ import { TodoModule } from './todo/todo.module';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: EntryComponents,
+  entryComponents: EntryComponents
 })
 export class AppModule {
  }

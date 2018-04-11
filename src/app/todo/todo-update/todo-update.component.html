@@ -1,4 +1,4 @@
-<form>
+<!-- <form>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="inputEmail4">Name</label>
@@ -28,9 +28,10 @@
         </div>
     </div>
     <button type="submit" class="btn btn-primary" (click)="updateInformation(todoModel)">Update</button>
-</form>
+</form> -->
 
-<table class="table table-dark">
+<app-component-loader [name]="name" [component]="component" *ngFor="let component of components"></app-component-loader>
+<!-- <table class="table table-dark">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -47,4 +48,4 @@
             <td></td>
         </tr>
     </tbody>
-</table>
+</table> -->

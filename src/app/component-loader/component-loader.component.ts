@@ -7,6 +7,7 @@ import { Component, OnInit, Input, ViewContainerRef, ComponentFactoryResolver } 
 })
 export class ComponentLoaderComponent implements OnInit {
   @Input() component: any;
+  @Input() name: any;
   constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {

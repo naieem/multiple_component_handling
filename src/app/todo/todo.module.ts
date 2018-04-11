@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
+import { EntryComponents } from '../entryComponents';
 // ======================================
 // Redux related coding starts
 // ======================================
@@ -12,12 +12,15 @@ import { IAppState, rootReducer, INITIAL_STATE } from '../store';
 // ======================================
 // Redux related coding ends
 // ======================================
+
+import { PlatformComponentsModule } from '../platform-components/platform-components.module';
 import { WorkflowService } from '../workflow.service';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoAddComponent } from './todo-add/todo-add.component';
 import { TodoUpdateComponent } from './todo-update/todo-update.component';
 import { TodoContainerComponent } from './todo-container/todo-container.component';
 import { TodoServiceService } from './todo-service.service';
+import { ComponentLoaderComponent } from '../component-loader/component-loader.component';
 const todoRoutes: Routes = [
   {
     path: '',
@@ -54,13 +57,15 @@ const todoRoutes: Routes = [
     CommonModule,
     RouterModule.forChild(todoRoutes),
     FormsModule,
-    NgReduxModule
+    NgReduxModule,
+    PlatformComponentsModule
   ],
   declarations: [
     TodoListComponent,
     TodoAddComponent,
     TodoUpdateComponent,
-    TodoContainerComponent
+    TodoContainerComponent,
+    ComponentLoaderComponent
   ],
   exports: [
     TodoListComponent,
@@ -68,7 +73,8 @@ const todoRoutes: Routes = [
     TodoUpdateComponent,
     TodoContainerComponent
   ],
-  providers: [TodoServiceService, WorkflowService]
+  providers: [TodoServiceService, WorkflowService],
+  entryComponents: EntryComponents
 })
 export class TodoModule {
   // constructor (ngRedux: NgRedux<IAppState>) {
