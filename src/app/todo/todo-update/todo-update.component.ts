@@ -6,6 +6,7 @@ import { ITodo } from '../../todos';
 import { UPDATE_TODO } from '../../actions';
 import * as _ from 'lodash';
 import { TodoServiceService } from '../todo-service.service';
+import { StReduxService } from '../../st-redux/st-redux.service';
 // ======================================
 // form fields components
 // ======================================
@@ -37,9 +38,19 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
   wfModel: any;
   components: any[];
   name = 'hello world';
+  stepNumber = 1;
+  STEPS: any;
   @select() information;
-  constructor( private workflowService: WorkflowService, private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>,
+  constructor( private stRedux: StReduxService,
+    private workflowService: WorkflowService, private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>,
     private router: Router, private service: TodoServiceService) {
+      this.STEPS = [];
+      // ======================================
+      // subscribing for properties
+      // ======================================
+      this.stRedux.subscribe('stepNumber', (result: any) => {
+        this.stepNumber = result;
+      });
     }
 
   ngOnInit() {
@@ -68,8 +79,11 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
             information: this.wfModel,
             newWorkflowInformation: {}
           };
-          this.ngRedux.configureStore(rootReducer, data);
-          console.log(this.ngRedux.getState());
+          // configuring steps
+          this.stRedux.configureStore(rootReducer, data);
+          // console.log(this.stRedux.getStore());
+          // this.ngRedux.configureStore(rootReducer, data);
+          // console.log(this.ngRedux.getState());
         } else {
           console.log(result.data);
         }
@@ -79,23 +93,47 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  nextStep() {
+    this.stRedux.dispatch({
+      type: 'ADD_TODO',
+      data: {
+        name: 'hello',
+        type: 'world'
+      }
+    });
+  }
+  prevStep(): void {
+    this.stRedux.dispatch({
+      type: 'PREVIOUS_STEP',
+      data: {
+        name: 'hello',
+        type: 'world'
+      }
+    });
+    console.log(this.stRedux.getStore());
+  }
   /**
    * Denormalizing component config
    * @param obj
    */
   denormalizeComponentFromConfig() {
-    this.wfModel.stepConfig.forEach(element => {
-      element.components.forEach(ele => {
+    this.wfModel.stepConfig.forEach((step, stepIndex) => {
+      const components = [];
+      step.components.forEach((component, componentIndex) => {
         const obj: any = {};
-        obj.model = ele.model; // model is needed because to assign
-        obj.value = ele.defaultValue; // this value will be save as key=>value pair with model
+        component.stepIndex = stepIndex;
+        component.componentIndex = componentIndex;
+        obj.model = component.model; // model is needed because to assign
+        obj.value = component.defaultValue; // this value will be save as key=>value pair with model
         // sending data to service for saving settings configuration
         this.workflowService.setData(obj);
         // assigning components for rendering in front end
-        this.assignComponent(ele);
+        components.push(this.assignComponent(component));
       });
+      this.STEPS[step.order] = components; // steps configuration goes here
+      // this.STEPS.splice(0, 1);
     });
-    console.log(this.workflowService.getData());
   }
   /**
    * Assigning and store Component
@@ -105,16 +143,18 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
     switch (component.type) {
       case 'text':
         component.component = FormInputComponent;
-        this.components.push(component);
-        break;
+        return component;
+        // this.components.push(component);
+        // break;
       case 'list_with_image':
         component.component = ListWithImageComponent;
         this.components.push(component);
         break;
       case 'textarea':
         component.component = FormTextareaComponent;
-        this.components.push(component);
-        break;
+        return component;
+        // this.components.push(component);
+        // break;
       case 'list_with_text':
         component.component = ListWithTextComponent;
         this.components.push(component);
@@ -166,6 +206,16 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
       todo: todoModel
     });
     this.router.navigate(['/todo/list']);
+  }
+  /**
+   * Saving settings information
+   * @param obj
+   */
+  submitConfig() {
+    const store = this.stRedux.getStore();
+    store.instanceinformation = this.workflowService.getData();
+    this.workflowService.updateWorkflowConfig(store).subscribe((result) => {
+    });
   }
 
 }

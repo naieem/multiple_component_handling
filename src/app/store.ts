@@ -45,11 +45,12 @@ export const INITIAL_STATE: any = {
 // =============================================
 // Function who takes care of all the actions
 // =============================================
-export function rootReducer(state: IAppState, action): IAppState {
+export function rootReducer(state, action): void {
     switch (action.type) {
         case ADD_TODO:
-            action.todo.id = state.todos.length + 1;
-            state.todos.push(action.todo);
+            state.stepNumber++;
+            // action.todo.id = state.todos.length + 1;
+            // state.todos.push(action.todo);
             // Object.assign({}, state, {
             //     todos: state.todos,
             //     lastUpdate: new Date()
@@ -84,14 +85,15 @@ export function rootReducer(state: IAppState, action): IAppState {
                 stepNumber: state.stepNumber
             });
         case PREVIOUS_STEP:
-            state.stepNumber = state.stepNumber - 1;
-            return Object.assign({}, state, {
-                lastUpdate: new Date(),
-                stepNumber: state.stepNumber
-            });
+            state.stepNumber--;
+            // return Object.assign({}, state, {
+            //     lastUpdate: new Date(),
+            //     stepNumber: state.stepNumber
+            // });
+            break;
         case UPDATE_TODO:
-             const ind = _.findIndex(state.todos, function(o) { return o.id === action.todo.id; });
-             state.todos[ind] = action.todo;
+            //  const ind = _.findIndex(state.todos, function(o) { return o.id === action.todo.id; });
+            // state.todos[ind] = action.todo;
             // return Object.assign({}, state, {
             //     todos: [],
             //     lastUpdate: new Date()

@@ -13,6 +13,14 @@ import { IAppState, rootReducer, INITIAL_STATE } from '../store';
 // Redux related coding ends
 // ======================================
 
+// ======================================
+// stRedux module insertion
+// ======================================
+import { StReduxModule } from '../st-redux/st-redux.module';
+// ======================================
+// stRedux module ends
+// ======================================
+
 import { PlatformComponentsModule } from '../platform-components/platform-components.module';
 import { WorkflowService } from '../workflow.service';
 import { TodoListComponent } from './todo-list/todo-list.component';
@@ -58,7 +66,8 @@ const todoRoutes: Routes = [
     RouterModule.forChild(todoRoutes),
     FormsModule,
     NgReduxModule,
-    PlatformComponentsModule
+    PlatformComponentsModule,
+    StReduxModule
   ],
   declarations: [
     TodoListComponent,
