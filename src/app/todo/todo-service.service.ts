@@ -13,4 +13,11 @@ export class TodoServiceService {
   getWorkflowConfigById(id: any) {
     return this.http.post(this.dataserviceUrl + 'getById', {itemId: id});
   }
+
+  getinstanceById(id: any) {
+    return this.http.post(this.dataserviceUrl + 'getInstanceById', {itemId: id});
+  }
+  getAllWorkFlowInstance() {
+    return this.http.get(this.dataserviceUrl + 'getallinstance');
+  }
 }

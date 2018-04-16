@@ -5,9 +5,9 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class StReduxService {
-  reducer: any;
-  initialState: any;
-  broadcast: any = {};
+  reducer: any; // actions which will take place
+  initialState: any; // store which stores data
+  broadcast: any = {}; // broadcast data
   constructor() {
     if (_.isEmpty(this.initialState)) {
       console.log('your store is empty');

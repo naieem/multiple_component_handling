@@ -53,7 +53,11 @@ const todoRoutes: Routes = [
         component: TodoAddComponent
       },
       {
-        path: 'edit/:id',
+        path: ':id/:type',
+        component: TodoUpdateComponent
+      },
+      {
+        path: ':id/:type',
         component: TodoUpdateComponent
       }
     ]

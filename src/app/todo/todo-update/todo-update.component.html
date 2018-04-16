@@ -1,12 +1,10 @@
 <div *ngFor="let steps of STEPS; let i = index">
     <div *ngIf="i != 0 && i == stepNumber">
-        <h1>steps {{i}}</h1>
+        <h1>{{steps.title}}</h1>
         <app-component-loader [component]="step" *ngFor="let step of steps"></app-component-loader>
     </div>
 </div>
-<!-- <div *ngIf="stepNumber == 2">hello this step {{stepNumber}}</div>
-<div *ngIf="stepNumber == 3">hello this step {{stepNumber}}</div>
-<div *ngIf="stepNumber == 4">hello this step {{stepNumber}}</div> -->
 <button type="submit" class="btn btn-primary" (click)="prevStep()" *ngIf="stepNumber > 1">Prev</button>
 <button type="submit" class="btn btn-primary" (click)="nextStep()" *ngIf="stepNumber > 0 && stepNumber < STEPS.length-1">Next</button>
-<button type="submit" class="btn btn-primary" (click)="submitConfig()" *ngIf="stepNumber > 0 && stepNumber == STEPS.length-1">Submit</button>
+<button type="submit" class="btn btn-primary" (click)="submitConfig()" *ngIf="stepNumber > 0 && stepNumber == STEPS.length-1 && ACTION_MODE == 'new'">Submit</button>
+<button type="submit" class="btn btn-primary" (click)="updateConfig()" *ngIf="stepNumber > 0 && stepNumber == STEPS.length-1 && ACTION_MODE == 'edit'">Update</button>

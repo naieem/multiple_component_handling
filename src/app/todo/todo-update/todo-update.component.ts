@@ -40,6 +40,7 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
   name = 'hello world';
   stepNumber = 1;
   STEPS: any;
+  ACTION_MODE: any;
   @select() information;
   constructor( private stRedux: StReduxService,
     private workflowService: WorkflowService, private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>,
@@ -57,7 +58,8 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
     this.components = [];
     this.route.params.subscribe(result => {
       this.itemId = result.id;
-      this.getwfConfig(this.itemId);
+      this.ACTION_MODE = result.type;
+      this.getwfConfig(this.itemId, result.type);
     });
   }
   ngOnDestroy() {
@@ -66,9 +68,10 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
    * Getting workflow configuration
    * @param obj
    */
-  getwfConfig(id: any) {
+  getwfConfig(id: any, type) {
+    if (type === 'new') {
     this.service.getWorkflowConfigById(id)
-    .subscribe((result: any) => {
+      .subscribe((result: any) => {
         if ( result.status) {
           this.wfModel = result.data;
           this.denormalizeComponentFromConfig();
@@ -92,6 +95,34 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     );
+    }
+    if (type === 'edit') {
+      this.service.getinstanceById(id)
+        .subscribe((result: any) => {
+        if ( result.status) {
+          this.wfModel = result.data;
+          this.denormalizeComponentFromConfig();
+          const data = {
+            todos: [],
+            lastUpdate: new Date(),
+            stepNumber: 1,
+            information: this.wfModel,
+            newWorkflowInformation: {}
+          };
+          // configuring steps
+          this.stRedux.configureStore(rootReducer, data);
+          // console.log(this.stRedux.getStore());
+          // this.ngRedux.configureStore(rootReducer, data);
+          // console.log(this.ngRedux.getState());
+        } else {
+          console.log(result.data);
+        }
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+    }
   }
 
   nextStep() {
@@ -125,13 +156,18 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
         component.stepIndex = stepIndex;
         component.componentIndex = componentIndex;
         obj.model = component.model; // model is needed because to assign
-        obj.value = component.defaultValue; // this value will be save as key=>value pair with model
+        if (component.c_type !== 'checkbox') {
+          obj.value = component.defaultValue; // this value will be save as key=>value pair with model
+        } else if (component.c_type === 'checkbox') {
+          obj.value = component.DefaultCheckboxValue; // this value will be save as key=>value pair with model
+        }
         // sending data to service for saving settings configuration
         this.workflowService.setData(obj);
         // assigning components for rendering in front end
         components.push(this.assignComponent(component));
       });
       this.STEPS[step.order] = components; // steps configuration goes here
+      this.STEPS[step.order]['title'] = step.stepTitle;
       // this.STEPS.splice(0, 1);
     });
   }
@@ -140,7 +176,7 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
    * @param obj
    */
   assignComponent(component: any) {
-    switch (component.type) {
+    switch (component.c_type) {
       case 'text':
         component.component = FormInputComponent;
         return component;
@@ -148,8 +184,7 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
         // break;
       case 'list_with_image':
         component.component = ListWithImageComponent;
-        this.components.push(component);
-        break;
+        return component;
       case 'textarea':
         component.component = FormTextareaComponent;
         return component;
@@ -157,32 +192,25 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
         // break;
       case 'list_with_text':
         component.component = ListWithTextComponent;
-        this.components.push(component);
-        break;
+        return component;
        case 'range':
         component.component = RangeComponent;
-        this.components.push(component);
-        break;
+        return component;
       case 'checkbox':
         component.component = FormCheckboxComponent;
-        this.components.push(component);
-        break;
+        return component;
       case 'radio':
         component.component = FormRadioComponent;
-        this.components.push(component);
-        break;
+        return component;
       case 'datepicker':
         component.component = FormDatepickerComponent;
-        this.components.push(component);
-        break;
+        return component;
       case 'switch':
         component.component = FormSwitchComponent;
-        this.components.push(component);
-        break;
+        return component;
       case 'file':
         component.component = FileUploadComponent;
-        this.components.push(component);
-        break;
+        return component;
     }
   }
   /**
@@ -214,7 +242,24 @@ export class TodoUpdateComponent implements OnInit, OnDestroy {
   submitConfig() {
     const store = this.stRedux.getStore();
     store.instanceinformation = this.workflowService.getData();
-    this.workflowService.updateWorkflowConfig(store).subscribe((result) => {
+    this.workflowService.saveWorkflowConfig(store).subscribe((result: any) => {
+      if (result.status === 200) {
+        this.router.navigate(['todo/list']);
+      }
+    });
+  }
+
+  /**
+   * Saving settings information
+   * @param obj
+   */
+  updateConfig() {
+    const store = this.stRedux.getStore();
+    store.instanceinformation = this.workflowService.getData();
+    this.workflowService.updateWorkflowConfig(store).subscribe((result: any) => {
+      if (result.status === 200) {
+        this.router.navigate(['todo/list']);
+      }
     });
   }
 
