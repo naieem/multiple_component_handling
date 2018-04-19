@@ -13,6 +13,14 @@ import { IAppState, rootReducer, INITIAL_STATE } from '../store';
 // Redux related coding ends
 // ======================================
 
+// ======================================
+// stRedux module insertion
+// ======================================
+import { StReduxModule } from '../st-redux/st-redux.module';
+// ======================================
+// stRedux module ends
+// ======================================
+
 import { PlatformComponentsModule } from '../platform-components/platform-components.module';
 import { WorkflowService } from '../workflow.service';
 import { TodoListComponent } from './todo-list/todo-list.component';
@@ -21,6 +29,8 @@ import { TodoUpdateComponent } from './todo-update/todo-update.component';
 import { TodoContainerComponent } from './todo-container/todo-container.component';
 import { TodoServiceService } from './todo-service.service';
 import { ComponentLoaderComponent } from '../component-loader/component-loader.component';
+
+import { AuthGuard } from '../services/auth-guard.service';
 const todoRoutes: Routes = [
   {
     path: '',
@@ -29,6 +39,7 @@ const todoRoutes: Routes = [
       {
         path: 'list',
         component: TodoListComponent,
+        canActivate: [AuthGuard],
         // children: [
         //   {
         //     path: 'add',
@@ -45,7 +56,11 @@ const todoRoutes: Routes = [
         component: TodoAddComponent
       },
       {
-        path: 'edit/:id',
+        path: ':id/:type',
+        component: TodoUpdateComponent
+      },
+      {
+        path: ':id/:type',
         component: TodoUpdateComponent
       }
     ]
@@ -58,7 +73,8 @@ const todoRoutes: Routes = [
     RouterModule.forChild(todoRoutes),
     FormsModule,
     NgReduxModule,
-    PlatformComponentsModule
+    PlatformComponentsModule,
+    StReduxModule
   ],
   declarations: [
     TodoListComponent,

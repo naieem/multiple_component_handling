@@ -1,10 +1,9 @@
-<div class="card">
+<div class="card" class="{{DefaultClass}}">
     <h2>{{data.LabelTitle}}</h2>
     <div class="card-body">
         <!-- <form class="col-md-12 w-100"> -->
-        {{input}}
         <mat-form-field class="w-100">
-            <input matInput  [(ngModel)]="input" placeholder="{{data.placeholder}}" name="input" (keyup)="OnInputChange(input)">
+            <input matInput [(ngModel)]="input" placeholder="{{data.placeholder}}" name="input" (keyup)="OnInputChange(input)">
         </mat-form-field>
         <!-- </form> -->
         <!-- <button type="button" class="btn col-md-12 btn-primary">Upload</button> -->

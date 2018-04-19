@@ -12,9 +12,20 @@ export class TodoListComponent implements OnInit {
   @select() todos;
   @select() lastUpdate;
   todo: any;
-  constructor( private ngRedux: NgRedux<IAppState>, private router: Router, private service: TodoServiceService) { }
+  CurrentGames: any[];
+  constructor( private ngRedux: NgRedux<IAppState>, private router: Router, private service: TodoServiceService) {
+    this.CurrentGames = [];
+  }
 
   ngOnInit() {
+
+    this.service.getAllWorkFlowInstance().subscribe((result: any) => {
+      if (result.status === 200) {
+        this.CurrentGames = result.data;
+      }
+    }, (error: any) => {
+      console.log(error);
+    });
     this.service.getAllWorkflowConfig()
     .subscribe((result: any) => {
         if ( result.status) {
@@ -28,8 +39,11 @@ export class TodoListComponent implements OnInit {
       }
     );
   }
+  add(id: any) {
+    this.router.navigate(['/todo', id, 'new']);
+  }
   edit(id: any) {
-    this.router.navigate(['/todo/edit/', id]);
+    this.router.navigate(['/todo', id, 'edit']);
   }
 
 }

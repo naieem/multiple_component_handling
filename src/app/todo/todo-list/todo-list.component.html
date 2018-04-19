@@ -1,4 +1,28 @@
-<!-- {{lastUpdate | async | date:"MM/dd/yy" }} -->
+<h2>Created Games</h2>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Address</th>
+            <th scope="col">Comment</th>
+            <th scope="col">isNew?</th>
+            <!-- <th>Action</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of CurrentGames" (click)="edit(item._id)">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.advertisementId.configuration.address}}</td>
+            <td>{{item.advertisementId.configuration.comment}}</td>
+            <td>{{item.advertisementId.configuration.isNew}}</td>
+            <!-- <td>
+                <button type="button" class="btn btn-primary ml-5" (click)="edit(item.id)">Edit</button>
+            </td> -->
+        </tr>
+    </tbody>
+</table>
+
+<h2>Template Games</h2>
 <table class="table table-dark">
     <thead>
         <tr>
@@ -10,7 +34,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of todo" (click)="edit(item._id)">
+        <tr *ngFor="let item of todo" (click)="add(item._id)">
             <th scope="row">{{item.id}}</th>
             <td>{{item.name}}</td>
             <!-- <td>{{item.email}}</td>
@@ -18,29 +42,6 @@
             <!-- <td>
                 <button type="button" class="btn btn-primary ml-5" (click)="edit(item.id)">Edit</button>
             </td> -->
-        </tr>
-    </tbody>
-</table>
-
-<table class="table table-dark">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Address</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of todos | async">
-            <th scope="row">{{item.id}}</th>
-            <td>{{item.name}}</td>
-            <td>{{item.email}}</td>
-            <td>{{item.address}}</td>
-             <td>
-                <button type="button" class="btn btn-primary ml-5" (click)="edit(item.id)">Edit</button>
-            </td>
         </tr>
     </tbody>
 </table>

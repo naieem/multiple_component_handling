@@ -1,10 +1,5 @@
-  <div class="card">
-      <!-- <h2>{{data.title}}</h2> -->
-      <div class="card-body">
-          <section class="example-section">
-              <mat-checkbox class="example-margin" [(ngModel)]="checked">Checked</mat-checkbox>
-              <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>
-            </section>
-          <button type="button" class="btn col-md-12 btn-primary">Submit</button>
-      </div>
-  </div>
+<div class="card" class="{{DefaultClass}}">
+    <div class="card-body">
+        <mat-checkbox class="example-margin" [(ngModel)]="checkbox" (change)="OnChange()">{{data.LabelTitle}}</mat-checkbox>
+    </div>
+</div>

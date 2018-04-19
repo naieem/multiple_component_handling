@@ -23,12 +23,17 @@ import { AppComponent } from './app.component';
 import { SuptoCopDirective } from './home-page/supto-cop.directive';
 // import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { TodoModule } from './todo/todo.module';
+import { RegistrationComponent } from './registration/registration.component';
+import { DataService } from './data.service';
+import { SessionService } from './services/session.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
 @NgModule({
   declarations: [
     AppComponent,
     MainRouteComponets,
     SuptoCopDirective,
-    // ComponentLoaderComponent
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,7 @@ import { TodoModule } from './todo/todo.module';
     PlatformComponentsModule,
     TodoModule
   ],
-  providers: [],
+  providers: [DataService, SessionService, AuthGuard, AuthService],
   bootstrap: [AppComponent],
   entryComponents: EntryComponents
 })
