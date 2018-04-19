@@ -25,6 +25,9 @@ import { SuptoCopDirective } from './home-page/supto-cop.directive';
 import { TodoModule } from './todo/todo.module';
 import { RegistrationComponent } from './registration/registration.component';
 import { DataService } from './data.service';
+import { SessionService } from './services/session.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +44,7 @@ import { DataService } from './data.service';
     PlatformComponentsModule,
     TodoModule
   ],
-  providers: [DataService],
+  providers: [DataService, SessionService, AuthGuard, AuthService],
   bootstrap: [AppComponent],
   entryComponents: EntryComponents
 })

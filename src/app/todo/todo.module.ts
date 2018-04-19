@@ -29,6 +29,8 @@ import { TodoUpdateComponent } from './todo-update/todo-update.component';
 import { TodoContainerComponent } from './todo-container/todo-container.component';
 import { TodoServiceService } from './todo-service.service';
 import { ComponentLoaderComponent } from '../component-loader/component-loader.component';
+
+import { AuthGuard } from '../services/auth-guard.service';
 const todoRoutes: Routes = [
   {
     path: '',
@@ -37,6 +39,7 @@ const todoRoutes: Routes = [
       {
         path: 'list',
         component: TodoListComponent,
+        canActivate: [AuthGuard],
         // children: [
         //   {
         //     path: 'add',

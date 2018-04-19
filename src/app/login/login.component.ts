@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { SessionService } from '../services/session.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -7,7 +9,7 @@ import { DataService } from '../data.service';
 })
 export class LoginComponent implements OnInit {
   user: any;
-  constructor(private dataservice: DataService) {
+  constructor(private router: Router, private dataservice: DataService, private sessionservice: SessionService) {
     this.user = {};
   }
 
@@ -17,10 +19,15 @@ export class LoginComponent implements OnInit {
   onLogin() {
     console.log(this.user);
     this.dataservice.login(this.user).subscribe((response) => {
-      debugger;
+       if (response.status === 200) {
+         this.sessionservice.setAuthSession(response.data.accessToken);
+         this.router.navigate(['todo/list']);
+       } else {
+         this.sessionservice.clearAuthSession();
+       }
     }, (error) => {
-      debugger;
+      console.log(error);
+      this.sessionservice.clearAuthSession();
     });
   }
-
 }
