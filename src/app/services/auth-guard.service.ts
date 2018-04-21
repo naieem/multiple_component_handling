@@ -10,7 +10,9 @@ export class AuthGuard implements CanActivate {
     const url: string = state.url;
     return this.checkLogin(url);
   }
-
+  // ====================================================
+  // checking if user is logged in or not ===============
+  // ====================================================
   checkLogin(url: string): boolean {
     if (this.authService.isUserLoggedIn()) { return true; }
 
@@ -22,6 +24,7 @@ export class AuthGuard implements CanActivate {
 
     // Set our navigation extras object
     // that contains our global query params and fragment
+    // eg: '?session_id=587787#acchor'
     const navigationExtras: NavigationExtras = {
       queryParams: { 'session_id': sessionId },
       fragment: 'anchor'

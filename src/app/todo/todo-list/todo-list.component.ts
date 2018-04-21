@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgRedux, select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 import { TodoServiceService } from '../todo-service.service';
 import { IAppState } from '../../store';
 import { Router } from '@angular/router';
@@ -9,35 +9,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit {
-  @select() todos;
-  @select() lastUpdate;
-  todo: any;
-  CurrentGames: any[];
-  constructor( private ngRedux: NgRedux<IAppState>, private router: Router, private service: TodoServiceService) {
-    this.CurrentGames = [];
-  }
+  todo: Observable<any[]>;
+  CurrentGames: Observable<any[]>;
+  constructor( private router: Router, private service: TodoServiceService) {}
 
   ngOnInit() {
-
-    this.service.getAllWorkFlowInstance().subscribe((result: any) => {
-      if (result.status === 200) {
-        this.CurrentGames = result.data;
-      }
-    }, (error: any) => {
-      console.log(error);
-    });
-    this.service.getAllWorkflowConfig()
-    .subscribe((result: any) => {
-        if ( result.status) {
-          this.todo = result.data;
-        } else {
-          console.log(result.data);
-        }
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    this.CurrentGames  = this.service.getAllWorkFlowInstance();
+    this.todo = this.service.getAllWorkflowConfig();
   }
   add(id: any) {
     this.router.navigate(['/todo', id, 'new']);

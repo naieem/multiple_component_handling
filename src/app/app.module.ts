@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // ======================================
 // Redux related coding starts
 // ======================================
@@ -28,6 +28,7 @@ import { DataService } from './data.service';
 import { SessionService } from './services/session.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
+import { HeaderInterceptor } from './services/http-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,17 @@ import { AuthService } from './services/auth.service';
     PlatformComponentsModule,
     TodoModule
   ],
-  providers: [DataService, SessionService, AuthGuard, AuthService],
+  providers: [
+      DataService,
+      SessionService,
+      AuthGuard,
+      AuthService,
+      {
+          provide: HTTP_INTERCEPTORS,
+          useClass: HeaderInterceptor,
+          multi: true
+      }
+    ],
   bootstrap: [AppComponent],
   entryComponents: EntryComponents
 })

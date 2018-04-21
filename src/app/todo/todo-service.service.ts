@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { catchError, map } from 'rxjs/operators';
 @Injectable()
 export class TodoServiceService {
   dataserviceUrl = 'http://localhost:5000/';
@@ -8,7 +10,11 @@ export class TodoServiceService {
     return this.http.post(this.dataserviceUrl + 'save', info);
   }
   getAllWorkflowConfig() {
-    return this.http.get(this.dataserviceUrl + 'getall');
+      return this.http.get(this.dataserviceUrl + 'getall').pipe(
+        map((result: any) => {
+        return result.data;
+      })
+    );
   }
   getWorkflowConfigById(id: any) {
     return this.http.post(this.dataserviceUrl + 'getById', {itemId: id});
@@ -17,7 +23,11 @@ export class TodoServiceService {
   getinstanceById(id: any) {
     return this.http.post(this.dataserviceUrl + 'getInstanceById', {itemId: id});
   }
-  getAllWorkFlowInstance() {
-    return this.http.get(this.dataserviceUrl + 'getallinstance');
+  getAllWorkFlowInstance(): Observable<any[]> {
+      return this.http.get(this.dataserviceUrl + 'getallinstance').pipe(
+        map((result: any) => {
+        return result.data;
+      })
+    );
   }
 }
