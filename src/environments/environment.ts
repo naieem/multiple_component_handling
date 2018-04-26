@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  authService : 'http://localhost:8000/api/'
+  authService : 'http://localhost:8000/api/',
+  workflowService: 'http://localhost:5000/'
 };
