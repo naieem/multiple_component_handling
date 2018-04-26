@@ -5,6 +5,12 @@ export class SessionService {
   isLoggedIn: boolean;
   constructor() { }
   getAuthSession(): boolean {
+    const token = this.getAccessToken();
+    if (this.isLoggedIn) {
+      return this.isLoggedIn;
+    } else if (token) {
+      this.isLoggedIn = true;
+    }
     return this.isLoggedIn;
   }
   setAuthSession(accessToken: string ): void {

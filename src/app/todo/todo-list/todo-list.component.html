@@ -1,5 +1,5 @@
 <h2>Created Games</h2>
-<table class="table table-dark">
+<table class="table table-dark" *ngIf="CurrentGames | async">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -11,7 +11,7 @@
     <tbody>
         <tr *ngFor="let item of CurrentGames | async" (click)="edit(item._id)">
             <th scope="row">{{item.id}}</th>
-            <td>{{item.advertisementId.configuration.title}}</td>
+            <td>{{item.name}}</td>
             <td>{{item.advertisementId.configuration.isNew}}</td>
             <!-- <td>
                 <button type="button" class="btn btn-primary ml-5" (click)="edit(item.id)">Edit</button>
